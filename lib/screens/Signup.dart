@@ -1,31 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:lynk/screens/Signup.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key key}) : super(key: key);
-
+class Signup extends StatefulWidget {
   @override
-  _LoginState createState() => _LoginState();
+  _SignupState createState() => _SignupState();
 }
 
-class _LoginState extends State<Login> {
+class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
 
   String _email;
   String _password;
-
-  @override
-  void initState() {
-    super.initState();
-  }
+  String _name;
+  String _number;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        iconTheme: IconThemeData(color: Colors.black12),
         title: Text(
-          "Login",
-          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 32),
+          "Signup",
+          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 24),
         ),
       ),
       body: Form(
@@ -42,12 +37,31 @@ class _LoginState extends State<Login> {
   }
 
   Widget _inputs() => Column(
-        children: <Widget>[_showEmailInput(), _showPasswordInput()],
+        children: <Widget>[
+          _showNameInput(),
+          _showEmailInput(),
+          _showPasswordInput(),
+          _showPhoneNumberInput()
+        ],
       );
+
+  Widget _showNameInput() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 10.0),
+      child: TextFormField(
+        maxLines: 1,
+        keyboardType: TextInputType.text,
+        decoration: InputDecoration(hintText: 'Name'),
+        autofocus: true,
+        validator: (value) => value.isEmpty ? 'Name can\'t be empty' : null,
+        onSaved: (value) => _name = value,
+      ),
+    );
+  }
 
   Widget _showEmailInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 10.0),
       child: TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.emailAddress,
@@ -59,9 +73,24 @@ class _LoginState extends State<Login> {
     );
   }
 
+  Widget _showPhoneNumberInput() {
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 10.0),
+      child: TextFormField(
+        maxLines: 1,
+        keyboardType: TextInputType.phone,
+        decoration: InputDecoration(hintText: 'Phone number'),
+        autofocus: false,
+        validator: (value) =>
+            value.isEmpty ? 'Phone number can\'t be empty' : null,
+        onSaved: (value) => _number = value,
+      ),
+    );
+  }
+
   Widget _showPasswordInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(40.0, 15.0, 40.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 10.0),
       child: TextFormField(
         maxLines: 1,
         obscureText: true,
@@ -75,7 +104,7 @@ class _LoginState extends State<Login> {
 
   Widget _showPrimaryButton() {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 0.0),
+        padding: const EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 10.0),
         child: MaterialButton(
           elevation: 5.0,
           minWidth: 240.0,
@@ -83,7 +112,7 @@ class _LoginState extends State<Login> {
           color: Color(0xff0d00ff),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          child: Text('Login',
+          child: Text('Signup',
               style: TextStyle(
                   fontSize: 20.0,
                   color: Colors.white,
@@ -94,11 +123,11 @@ class _LoginState extends State<Login> {
 
   Widget _showSecondaryButton() {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(0.0, 30.0, 0.0, 0.0),
+        padding: const EdgeInsets.fromLTRB(40.0, 10.0, 40.0, 10.0),
         child: FlatButton(
-          child: Text('Create an account',
+          child: Text('Existing user?',
               style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.w300)),
-          onPressed: _moveToSignup,
+          onPressed: _moveToLogin,
         ));
   }
 
@@ -113,10 +142,7 @@ class _LoginState extends State<Login> {
     }
   }
 
-  void _moveToSignup() {
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Signup()),
-    );
+  void _moveToLogin() {
+    Navigator.pop(context);
   }
 }
