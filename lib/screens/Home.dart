@@ -5,7 +5,10 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your events'),
+        title: Text(
+          'Your events',
+          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 28),
+        ),
       ),
       body: Container(
         child: ListView(
@@ -21,8 +24,10 @@ class Home extends StatelessWidget {
 
   Padding _buildEventCard(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8),
       child: Card(
+        elevation: 0,
+        color: Color(0xfff9f9ff),
         child: Stack(
           children: <Widget>[
             _buildHostView(context),

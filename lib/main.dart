@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:lynk/screens/Home.dart';
+import 'package:lynk/screens/Host.dart';
 
 void main() {
   debugPaintSizeEnabled = false;
@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
           brightness: Brightness.light,
           primaryColor: Color(0xff0d00ff),
           scaffoldBackgroundColor: Colors.white,
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.green,
           textTheme: TextTheme(title: TextStyle(color: Colors.black12)),
           inputDecorationTheme: InputDecorationTheme(
               filled: true,
@@ -35,10 +35,10 @@ class MyApp extends StatelessWidget {
               color: Colors.white,
               textTheme: TextTheme(
                   title: TextStyle(
-                      color: Colors.black,
+                      color: Theme.of(context).primaryColor,
                       fontSize: 24,
                       fontWeight: FontWeight.w800)))),
-      home: Home(),
+      home: Host(),
     );
   }
 }
