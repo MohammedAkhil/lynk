@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
                       color: Theme.of(context).primaryColor,
                       fontSize: 24,
                       fontWeight: FontWeight.w800)))),
-      home: Host(),
+      home: Login(),
     );
   }
 }

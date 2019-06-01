@@ -1,56 +1,56 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:lynk/screens/Event.dart';
 
 class Home extends StatelessWidget {
   final String userId;
-  Home({Key key, @required this.userId }) : super(key: key);
+  Home({Key key, @required this.userId}) : super(key: key);
 
-   @override
-   Widget build(BuildContext context) {
-     return Scaffold(
-       appBar: AppBar(
-         title: Text('Your events'),
-       ),
-       body: Container(
-           child: StreamBuilder<QuerySnapshot>(
-             stream: Firestore.instance.collection('events').snapshots(),
-             builder: (BuildContext context,
-                 AsyncSnapshot<QuerySnapshot> snapshot) {
-               if (snapshot.hasError)
-                 return new Text('Error: ${snapshot.error}');
-               switch (snapshot.connectionState) {
-                 case ConnectionState.waiting:
-                   return new Text('Loading...');
-                 default:
-                   return new ListView(
-                     children: snapshot.data.documents
-                         .map((DocumentSnapshot document) {
-                     return _buildEventCard(context, document);
-                     }).toList(),
-                   );
-               }
-             },
-           )
-       ),
-     );
-   }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Your events'),
+      ),
+      body: Container(
+          child: StreamBuilder<QuerySnapshot>(
+        stream: Firestore.instance.collection('events').snapshots(),
+        builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+          if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
+          switch (snapshot.connectionState) {
+            case ConnectionState.waiting:
+              return new Text('Loading...');
+            default:
+              return new ListView(
+                children:
+                    snapshot.data.documents.map((DocumentSnapshot document) {
+                  return _buildEventCard(context, document);
+                }).toList(),
+              );
+          }
+        },
+      )),
+    );
+  }
 
   Padding _buildEventCard(BuildContext context, document) {
     return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Card(
-        elevation: 0,
-        color: Color(0xfff9f9ff),
-        child: Stack(
-          children: <Widget>[
-            _buildHostView(context),
-            _buildHostCount(document),
-            _buildDate(document),
-            _buildNameLocation(document),
-          ],
-        ),
-      ),
-    );
+        padding: const EdgeInsets.all(8),
+        child: InkWell(
+          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Event())),
+          child: Card(
+            elevation: 0,
+            color: Color(0xfff9f9ff),
+            child: Stack(
+              children: <Widget>[
+                _buildHostView(context),
+                _buildHostCount(document),
+                _buildDate(document),
+                _buildNameLocation(document),
+              ],
+            ),
+          ),
+        ));
   }
 
   Container _buildNameLocation(document) {
@@ -67,7 +67,7 @@ class Home extends StatelessWidget {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
             ),
             Text(
-              'Geekyants pvt limited',
+              document['location'],
               style: TextStyle(
                   fontSize: 12,
                   fontWeight: FontWeight.w600,
@@ -83,7 +83,7 @@ class Home extends StatelessWidget {
     return Positioned(
       bottom: 16,
       right: 16,
-      child: Text('26/12/16',
+      child: Text(document['startDate'].toString().split(' ')[0],
           style: TextStyle(
               fontSize: 12,
               fontWeight: FontWeight.w600,
@@ -96,7 +96,7 @@ class Home extends StatelessWidget {
       top: 24,
       right: 16,
       child: Text(
-        '2 hosts',
+        document['users'].length.toString() + " host(s)",
         style: TextStyle(
             fontSize: 12,
             fontWeight: FontWeight.w600,
