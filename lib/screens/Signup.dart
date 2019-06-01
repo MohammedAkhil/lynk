@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'dart:async';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lynk/screens/Home.dart';
 
 class Signup extends StatefulWidget {
   @override
@@ -7,6 +10,7 @@ class Signup extends StatefulWidget {
 
 class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
+  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
 
   String _email;
   String _password;
@@ -131,14 +135,26 @@ class _SignupState extends State<Signup> {
         ));
   }
 
-  void _validateAndSubmit() {
+  Future<String> signUp(String email, String password) async {
+    FirebaseUser user = await _firebaseAuth.createUserWithEmailAndPassword(
+        email: email, password: password);
+    return user.uid;
+  }
+
+  void _validateAndSubmit() async {
     // First validate form.
     if (this._formKey.currentState.validate()) {
       _formKey.currentState.save(); // Save our form now.
+      String userId;
 
       print('Printing the login data.');
       print('Email: $_email');
       print('Password: $_password');
+      userId = await signUp(_email, _password);
+      print('userId : $userId');
+      if (userId != null) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(userId: userId)));
+      }
     }
   }
 

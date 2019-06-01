@@ -39,8 +39,8 @@ class Host extends StatelessWidget {
             children: <Widget>[
               DecoratedBox(
                 decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/motorcycle.png'))),
+                    image:
+                        DecorationImage(image: AssetImage('motorcycle.png'))),
               ),
               Text('Car')
             ],

@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "255940363915",
+    "firebase_url": "https://lynk-fsoc.firebaseio.com",
+    "project_id": "lynk-fsoc",
+    "storage_bucket": "lynk-fsoc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:255940363915:android:70394acb03de89cf",
+        "android_client_info": {
+          "package_name": "com.akhil.lynk"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "255940363915-gkoq2c486ofsbfr9ek7sefuc5pa49s5k.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBDOo3l3IZsEju7YRkftg5wm6btaHdUE64"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "255940363915-gkoq2c486ofsbfr9ek7sefuc5pa49s5k.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
