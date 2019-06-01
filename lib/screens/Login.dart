@@ -101,7 +101,16 @@ class _LoginState extends State<Login> {
         ));
   }
 
-  void _validateAndSubmit() {}
+  void _validateAndSubmit() {
+    // First validate form.
+    if (this._formKey.currentState.validate()) {
+      _formKey.currentState.save(); // Save our form now.
+
+      print('Printing the login data.');
+      print('Email: $_email');
+      print('Password: $_password');
+    }
+  }
 
   void _moveToSignup() {}
 }
