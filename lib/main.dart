@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:lynk/screens/Login.dart';
+import 'package:lynk/screens/Home.dart';
 
 void main() {
   debugPaintSizeEnabled = false;
@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
           primaryColor: Color(0xff0d00ff),
           scaffoldBackgroundColor: Colors.white,
           primarySwatch: Colors.blue,
+          textTheme: TextTheme(title: TextStyle(color: Colors.black12)),
           inputDecorationTheme: InputDecorationTheme(
               filled: true,
               fillColor: Color(0xfff0f0f0),
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
                       color: Colors.black,
                       fontSize: 24,
                       fontWeight: FontWeight.w800)))),
-      home: Login(),
+      home: Home(),
     );
   }
 }

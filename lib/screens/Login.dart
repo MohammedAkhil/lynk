@@ -24,7 +24,7 @@ class _LoginState extends State<Login> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Login",
+          "lynk",
           style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 32),
         ),
       ),
@@ -47,7 +47,7 @@ class _LoginState extends State<Login> {
 
   Widget _showEmailInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(60.0, 40.0, 60.0, 10.0),
       child: TextFormField(
         maxLines: 1,
         keyboardType: TextInputType.emailAddress,
@@ -61,7 +61,7 @@ class _LoginState extends State<Login> {
 
   Widget _showPasswordInput() {
     return Padding(
-      padding: const EdgeInsets.fromLTRB(40.0, 15.0, 40.0, 0.0),
+      padding: const EdgeInsets.fromLTRB(60.0, 15.0, 60.0, 0.0),
       child: TextFormField(
         maxLines: 1,
         obscureText: true,
@@ -75,7 +75,7 @@ class _LoginState extends State<Login> {
 
   Widget _showPrimaryButton() {
     return Padding(
-        padding: const EdgeInsets.fromLTRB(40.0, 40.0, 40.0, 0.0),
+        padding: const EdgeInsets.fromLTRB(60.0, 40.0, 60.0, 0.0),
         child: MaterialButton(
           elevation: 5.0,
           minWidth: 240.0,
