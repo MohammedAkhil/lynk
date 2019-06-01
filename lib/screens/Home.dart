@@ -1,43 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Home extends StatelessWidget {
   final String userId;
   Home({Key key, @required this.userId }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Your events'),
-      ),
-      body: Container(
-        child: ListView(
-          children: <Widget>[
-            _buildEventCard(context),
-            _buildEventCard(context),
-            _buildEventCard(context),
-          ],
-        ),
-      ),
-    );
-  }
 
-  Padding _buildEventCard(BuildContext context) {
+   @override
+   Widget build(BuildContext context) {
+     return Scaffold(
+       appBar: AppBar(
+         title: Text('Your events'),
+       ),
+       body: Container(
+           child: StreamBuilder<QuerySnapshot>(
+             stream: Firestore.instance.collection('events').snapshots(),
+             builder: (BuildContext context,
+                 AsyncSnapshot<QuerySnapshot> snapshot) {
+               if (snapshot.hasError)
+                 return new Text('Error: ${snapshot.error}');
+               switch (snapshot.connectionState) {
+                 case ConnectionState.waiting:
+                   return new Text('Loading...');
+                 default:
+                   return new ListView(
+                     children: snapshot.data.documents
+                         .map((DocumentSnapshot document) {
+                     return _buildEventCard(context, document);
+                     }).toList(),
+                   );
+               }
+             },
+           )
+       ),
+     );
+   }
+
+  Padding _buildEventCard(BuildContext context, document) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
         child: Stack(
           children: <Widget>[
             _buildHostView(context),
-            _buildHostCount(),
-            _buildDate(),
-            _buildNameLocation(),
+            _buildHostCount(document),
+            _buildDate(document),
+            _buildNameLocation(document),
           ],
         ),
       ),
     );
   }
 
-  Container _buildNameLocation() {
+  Container _buildNameLocation(document) {
     return Container(
       height: 100,
       child: Padding(
@@ -47,7 +61,7 @@ class Home extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Text(
-              'Flutter Hackathon',
+              document['name'],
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.w800),
             ),
             Text(
@@ -63,7 +77,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  Positioned _buildDate() {
+  Positioned _buildDate(document) {
     return Positioned(
       bottom: 16,
       right: 16,
@@ -75,7 +89,7 @@ class Home extends StatelessWidget {
     );
   }
 
-  Positioned _buildHostCount() {
+  Positioned _buildHostCount(document) {
     return Positioned(
       top: 24,
       right: 16,
