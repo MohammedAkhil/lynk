@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:lynk/screens/Home.dart';
+import 'package:lynk/screens/Login.dart';
 
 void main() {
   debugPaintSizeEnabled = false;
@@ -38,7 +38,7 @@ class MyApp extends StatelessWidget {
                       color: Colors.black,
                       fontSize: 24,
                       fontWeight: FontWeight.w800)))),
-      home: Home(),
+      home: Login(),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:lynk/screens/Signup.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:lynk/screens/Home.dart';
 
 class Login extends StatefulWidget {
   const Login({Key key}) : super(key: key);
@@ -121,6 +122,9 @@ class _LoginState extends State<Login> {
       print('Password: $_password');
       String userId = await signIn(_email, _password);
       print('userId : $userId');
+      if(userId != null) {
+        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(userId: userId)));
+      }
     }
   }
 
