@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:lynk/screens/Event.dart';
 
 class Home extends StatelessWidget {
@@ -10,7 +10,10 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your events'),
+        title: Text(
+          'Your events',
+          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 32),
+        ),
       ),
       body: Container(
           child: StreamBuilder<QuerySnapshot>(
@@ -19,7 +22,9 @@ class Home extends StatelessWidget {
           if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return new Text('Loading...');
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             default:
               return new ListView(
                 children:
@@ -37,7 +42,12 @@ class Home extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.all(8),
         child: InkWell(
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Event())),
+          onTap: () => Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Event(
+                        event: document,
+                      ))),
           child: Card(
             elevation: 0,
             color: Color(0xfff9f9ff),
