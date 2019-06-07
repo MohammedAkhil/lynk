@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lynk/screens/Home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Signup extends StatefulWidget {
   @override
@@ -153,7 +154,11 @@ class _SignupState extends State<Signup> {
       userId = await signUp(_email, _password);
       print('userId : $userId');
       if (userId != null) {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(userId: userId)));
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("userId", userId);
+        prefs.setString("authStatus", "LOGGED_IN");
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => Home(userId: userId)));
       }
     }
   }

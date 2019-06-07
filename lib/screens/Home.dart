@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:lynk/screens/Event.dart';
+import 'package:lynk/screens/Login.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Home extends StatelessWidget {
   final String userId;
@@ -11,6 +13,12 @@ class Home extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Your events'),
+        actions: <Widget>[
+          FlatButton(
+            child: new Text('Logout'),
+            onPressed: () => _logout(context),
+          )
+        ],
       ),
       body: Container(
           child: StreamBuilder<QuerySnapshot>(
@@ -19,7 +27,7 @@ class Home extends StatelessWidget {
           if (snapshot.hasError) return new Text('Error: ${snapshot.error}');
           switch (snapshot.connectionState) {
             case ConnectionState.waiting:
-              return new Text('Loading...');
+              return Center(child: CircularProgressIndicator());
             default:
               return new ListView(
                 children:
@@ -37,7 +45,8 @@ class Home extends StatelessWidget {
     return Padding(
         padding: const EdgeInsets.all(8),
         child: InkWell(
-          onTap: () => Navigator.push(context, MaterialPageRoute(builder: (context) => Event())),
+          onTap: () => Navigator.push(
+              context, MaterialPageRoute(builder: (context) => Event())),
           child: Card(
             elevation: 0,
             color: Color(0xfff9f9ff),
@@ -117,5 +126,13 @@ class Home extends StatelessWidget {
             color: Theme.of(context).primaryColor),
       ),
     );
+  }
+
+  _logout(context) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.clear();
+    prefs.setString("authStatus", "NOT_LOGGED_IN");
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => Login()));
   }
 }

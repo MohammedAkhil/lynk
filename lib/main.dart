@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:lynk/screens/Host.dart';
-import 'package:lynk/screens/Home.dart';
 import 'package:lynk/screens/Login.dart';
+import 'package:lynk/screens/Home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+void main() async {
   debugPaintSizeEnabled = false;
-
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String authStatus = prefs.getString("authStatus");
+  String userId = prefs.getString("userId");
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
-  runApp(MyApp());
+  runApp(MyApp(authStatus: authStatus, userId: userId));
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  final String authStatus;
+  final String userId;
+  MyApp({Key key, @required this.authStatus, this.userId}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -40,7 +45,7 @@ class MyApp extends StatelessWidget {
                       color: Theme.of(context).primaryColor,
                       fontSize: 24,
                       fontWeight: FontWeight.w800)))),
-      home: Login(),
+      home: authStatus == 'LOGGED_IN' ? Home(userId: userId) : Login(),
     );
   }
 }

@@ -3,10 +3,10 @@ import 'package:lynk/screens/Signup.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:lynk/screens/Home.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Login extends StatefulWidget {
   const Login({Key key}) : super(key: key);
-
   @override
   _LoginState createState() => _LoginState();
 }
@@ -122,8 +122,12 @@ class _LoginState extends State<Login> {
       print('Password: $_password');
       String userId = await signIn(_email, _password);
       print('userId : $userId');
-      if(userId != null) {
-        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Home(userId: userId)));
+      if (userId != null) {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setString("userId", userId);
+        prefs.setString("authStatus", "LOGGED_IN");
+        Navigator.pushReplacement(context,
+            MaterialPageRoute(builder: (context) => Home(userId: userId)));
       }
     }
   }
