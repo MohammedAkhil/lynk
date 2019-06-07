@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/material.dart';
 import 'package:lynk/screens/Event.dart';
 import 'package:lynk/screens/Login.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -12,7 +12,10 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your events'),
+        title: Text(
+          'Your events',
+          style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 32),
+        ),
         actions: <Widget>[
           FlatButton(
             child: new Text('Logout'),
@@ -46,7 +49,11 @@ class Home extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         child: InkWell(
           onTap: () => Navigator.push(
-              context, MaterialPageRoute(builder: (context) => Event())),
+              context,
+              MaterialPageRoute(
+                  builder: (context) => Event(
+                        event: document,
+                      ))),
           child: Card(
             elevation: 0,
             color: Color(0xfff9f9ff),
